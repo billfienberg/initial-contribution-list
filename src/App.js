@@ -1,23 +1,22 @@
-import React from 'react';
+import React from "react"
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   componentDidMount() {
-    console.log('Mounted')
+    console.log("Mounted")
   }
 
   render() {
     return (
       <div className="App">
-        <h1>Class component</h1>
+        <input type="text"></input>
       </div>
-    );
-
+    )
   }
 }
 
-export default App;
+export default App
