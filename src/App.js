@@ -1,10 +1,35 @@
 import React from "react"
+import gql from "graphql-tag"
+
+// https://developer.github.com/v4/explorer/
+const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
+  query RepositoriesContributedTo($username: String!) {
+    user(login: $username) {
+      repositoriesContributedTo(first: 50, privacy: PUBLIC) {
+        totalCount
+        nodes {
+          id
+          owner {
+            id
+            login
+          }
+          name
+          description
+          stargazers {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+`
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       username: "",
+      repos: [],
     }
   }
 
@@ -14,15 +39,24 @@ class App extends React.Component {
     this.setState({ username: event.target.value })
   }
 
-  // https://reactjs.org/docs/forms.html#controlled-components
-  handleSubmit = (event) => {
-    alert("A username was submitted: " + this.state.username)
+  // https://www.howtographql.com/react-apollo/7-filtering-searching-the-list-of-links/
+  _executeSearch = async (event) => {
     event.preventDefault()
+    const { props = {}, state } = this
+    const { username } = state
+    const { client = {} } = props
+    const result = await client.query({
+      query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
+      variables: { username },
+    })
+    const { repositoriesContributedTo } = result.data.user
+    const { nodes } = repositoriesContributedTo
+    this.setState({ repos: nodes })
   }
 
   render() {
-    const { state, onChange } = this
-    const { username } = state
+    const { onChange, state } = this
+    const { username, repos = [] } = state
     const isUsernameInputEmpty = !username
     return (
       <div className="App">
@@ -33,7 +67,7 @@ class App extends React.Component {
         </p>
         <p>3. See a list of all the repos that user has contributed to.</p>
 
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this._executeSearch}>
           <div>
             <label>
               Username:
@@ -46,6 +80,10 @@ class App extends React.Component {
             </button>
           </div>
         </form>
+
+        {repos.map((x) => {
+          return <div>{x.id}</div>
+        })}
       </div>
     )
   }
