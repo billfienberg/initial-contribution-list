@@ -30,11 +30,11 @@ class App extends React.Component {
     this.state = {
       username: "",
       repos: [],
-      isLoading: false
+      isLoading: false,
     }
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   onChange = (event) => {
     this.setState({ username: event.target.value })
@@ -85,30 +85,31 @@ class App extends React.Component {
 
         <h2>Repos</h2>
         {loading && <p>Loading...</p>}
-        {!!repos.length && <table>
-          <thead>
-            <tr>
-              <th>Owner</th>
-              <th>Name</th>
-              <th>Stars</th>
-            </tr>
-          </thead>
-          <tbody>
-            {repos.map((x) => {
-              const { id, name, owner, stargazers } = x
-              const { login: repoOwner } = owner
-              const { totalCount: starCount } = stargazers
-              return (
-                <tr key={id}>
-                  <td>{repoOwner}</td>
-                  <td>{name}</td>
-                  <td>{starCount}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>}
-
+        {!!repos.length && (
+          <table>
+            <thead>
+              <tr>
+                <th>Owner</th>
+                <th>Name</th>
+                <th>Stars</th>
+              </tr>
+            </thead>
+            <tbody>
+              {repos.map((x) => {
+                const { id, name, owner, stargazers } = x
+                const { login: repoOwner } = owner
+                const { totalCount: starCount } = stargazers
+                return (
+                  <tr key={id}>
+                    <td>{repoOwner}</td>
+                    <td>{name}</td>
+                    <td>{starCount}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     )
   }
