@@ -10,8 +10,14 @@ class App extends React.Component {
 
   componentDidMount() {}
 
-  onChange = (e) => {
-    this.setState({ username: e.target.value })
+  onChange = (event) => {
+    this.setState({ username: event.target.value })
+  }
+
+  // https://reactjs.org/docs/forms.html#controlled-components
+  handleSubmit = (event) => {
+    alert("A username was submitted: " + this.state.username)
+    event.preventDefault()
   }
 
   render() {
@@ -27,17 +33,19 @@ class App extends React.Component {
         </p>
         <p>3. See a list of all the repos that user has contributed to.</p>
 
-        <div>
-          <label>
-            Username:
-            <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
-          </label>
-        </div>
-        <div>
-          <button type="submit" disabled={isUsernameInputEmpty}>
-            Fetch Contributions
-          </button>
-        </div>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <label>
+              Username:
+              <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
+            </label>
+          </div>
+          <div>
+            <button type="submit" disabled={isUsernameInputEmpty}>
+              Fetch Contributions
+            </button>
+          </div>
+        </form>
       </div>
     )
   }
