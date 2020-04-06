@@ -30,10 +30,11 @@ class App extends React.Component {
     this.state = {
       username: "",
       repos: [],
+      isLoading: false
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   onChange = (event) => {
     this.setState({ username: event.target.value })
@@ -42,6 +43,7 @@ class App extends React.Component {
   // https://www.howtographql.com/react-apollo/7-filtering-searching-the-list-of-links/
   _executeSearch = async (event) => {
     event.preventDefault()
+    this.setState({ loading: true })
     const { props = {}, state } = this
     const { username } = state
     const { client = {} } = props
@@ -51,13 +53,13 @@ class App extends React.Component {
     })
     const { repositoriesContributedTo } = result.data.user
     const { nodes } = repositoriesContributedTo
-    this.setState({ repos: nodes })
+    this.setState({ repos: nodes, loading: false })
   }
 
   render() {
     const { onChange, state } = this
-    const { username, repos = [] } = state
-    const isUsernameInputEmpty = !username
+    const { loading, repos = [], username } = state
+    const isDisabled = !username || loading
     return (
       <div className="App">
         <h1>Contribution List</h1>
@@ -75,15 +77,38 @@ class App extends React.Component {
             </label>
           </div>
           <div>
-            <button type="submit" disabled={isUsernameInputEmpty}>
+            <button type="submit" disabled={isDisabled}>
               Fetch Contributions
             </button>
           </div>
         </form>
 
-        {repos.map((x) => {
-          return <div>{x.id}</div>
-        })}
+        <h2>Repos</h2>
+        {loading && <p>Loading...</p>}
+        {!!repos.length && <table>
+          <thead>
+            <tr>
+              <th>Owner</th>
+              <th>Name</th>
+              <th>Stars</th>
+            </tr>
+          </thead>
+          <tbody>
+            {repos.map((x) => {
+              const { id, name, owner, stargazers } = x
+              const { login: repoOwner } = owner
+              const { totalCount: starCount } = stargazers
+              return (
+                <tr key={id}>
+                  <td>{repoOwner}</td>
+                  <td>{name}</td>
+                  <td>{starCount}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>}
+
       </div>
     )
   }
