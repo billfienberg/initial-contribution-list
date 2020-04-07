@@ -7,19 +7,17 @@ test("renders the Contributions List app", () => {
 
   const usernameInput = getByLabelText(/username/i)
   expect(usernameInput).toBeInTheDocument()
-  // TODO: assert that input box is empty
+  expect(usernameInput.value).toBe("")
 
   const fetchContributionsButton = getByRole(/button/i)
   expect(fetchContributionsButton).toBeInTheDocument()
-  // TODO: assert that search button is disabled
+  expect(fetchContributionsButton.disabled).toBe(true)
 
   const loadingMessage = queryByText(/loading/i)
   expect(loadingMessage).not.toBeInTheDocument()
-  // TODO: assert that loading indicator is not present
 
   const repoTable = queryByText(/loading/i)
   expect(repoTable).not.toBeInTheDocument()
-  // TODO: assert that no repos are rendered
 
   // TODO: input a username
   // TODO: assert that search button is no longer disabled
