@@ -2,7 +2,7 @@ import React from "react"
 import gql from "graphql-tag"
 
 // https://developer.github.com/v4/explorer/
-const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
+export const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
   query RepositoriesContributedTo($username: String!) {
     user(login: $username) {
       repositoriesContributedTo(first: 50, privacy: PUBLIC) {
@@ -46,7 +46,7 @@ class App extends React.Component {
     this.setState({ loading: true })
     const { props = {}, state } = this
     const { username } = state
-    const { client = {} } = props
+    const { client } = props
     const result = await client.query({
       query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
       variables: { username },
@@ -85,8 +85,9 @@ class App extends React.Component {
 
         <h2>Repos</h2>
         {loading && <p>Loading...</p>}
+
         {!!repos.length && (
-          <table>
+          <table data-testid="repo-table">
             <thead>
               <tr>
                 <th>Owner</th>
