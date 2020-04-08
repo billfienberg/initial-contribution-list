@@ -1,8 +1,9 @@
 import React from "react"
 import gql from "graphql-tag"
+import { ApolloConsumer } from "react-apollo"
 
 // https://developer.github.com/v4/explorer/
-const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
+export const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
   query RepositoriesContributedTo($username: String!) {
     user(login: $username) {
       repositoriesContributedTo(first: 50, privacy: PUBLIC) {
@@ -30,11 +31,11 @@ class App extends React.Component {
     this.state = {
       username: "",
       repos: [],
-      isLoading: false
+      isLoading: false,
     }
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   onChange = (event) => {
     this.setState({ username: event.target.value })
@@ -46,7 +47,7 @@ class App extends React.Component {
     this.setState({ loading: true })
     const { props = {}, state } = this
     const { username } = state
-    const { client = {} } = props
+    const { client } = props
     const result = await client.query({
       query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
       variables: { username },
@@ -85,33 +86,38 @@ class App extends React.Component {
 
         <h2>Repos</h2>
         {loading && <p>Loading...</p>}
-        {!!repos.length && <table>
-          <thead>
-            <tr>
-              <th>Owner</th>
-              <th>Name</th>
-              <th>Stars</th>
-            </tr>
-          </thead>
-          <tbody>
-            {repos.map((x) => {
-              const { id, name, owner, stargazers } = x
-              const { login: repoOwner } = owner
-              const { totalCount: starCount } = stargazers
-              return (
-                <tr key={id}>
-                  <td>{repoOwner}</td>
-                  <td>{name}</td>
-                  <td>{starCount}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>}
 
+        {!!repos.length && (
+          <table data-testid="repo-table">
+            <thead>
+              <tr>
+                <th>Owner</th>
+                <th>Name</th>
+                <th>Stars</th>
+              </tr>
+            </thead>
+            <tbody>
+              {repos.map((x) => {
+                const { id, name, owner, stargazers } = x
+                const { login: repoOwner } = owner
+                const { totalCount: starCount } = stargazers
+                return (
+                  <tr key={id}>
+                    <td>{repoOwner}</td>
+                    <td>{name}</td>
+                    <td>{starCount}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     )
   }
 }
 
-export default App
+const WithApolloClient = () => <ApolloConsumer>{(client) => <App client={client} />}</ApolloConsumer>
+
+export default WithApolloClient
+export { App }
