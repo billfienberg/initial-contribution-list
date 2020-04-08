@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import "./index.css"
 import App from "./App"
 
 // https://www.howtographql.com/react-apollo/1-getting-started/
