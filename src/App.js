@@ -11,20 +11,16 @@ function App(props) {
   const [isLoading, setIsLoading] = useState(false)
   const isDisabled = !username || isLoading
 
-  function onChange(event) {
-    setUsername(event.target.value)
-  }
+  const handleUsernameChange = (e) => setUsername(e.target.value)
 
-  async function _executeSearch(event) {
+  async function executeSearch(event) {
     event.preventDefault()
     setIsLoading(true)
-    const { client } = props
-    const result = await client.query({
+    const result = await props.client.query({
       query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
       variables: { username },
     })
-    const { repositoriesContributedTo } = result.data.user
-    const { nodes } = repositoriesContributedTo
+    const { nodes } = result.data.user.repositoriesContributedTo
     setRepos(nodes)
     setIsLoading(false)
     setUsername("")
@@ -33,7 +29,7 @@ function App(props) {
   return (
     <div className="App">
       <Introduction />
-      <Form onSubmit={_executeSearch} isDisabled={isDisabled} onChange={onChange} username={username} />
+      <Form onSubmit={executeSearch} isDisabled={isDisabled} onChange={handleUsernameChange} username={username} />
       <h2>Repos</h2>
       {isLoading && <p>Loading...</p>}
       {!!repos.length && <RepoTable repos={repos} />}
