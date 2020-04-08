@@ -41,5 +41,7 @@ test("renders the Contributions List app", async () => {
   await waitForElementToBeRemoved(() => queryByText(/loading/i))
   expect(queryByText(/loading/i)).not.toBeInTheDocument()
 
+  expect(getByLabelText(/username/i).value).toBe("")
+
   expect(getByTestId(/repo-table/i)).toBeInTheDocument()
 })

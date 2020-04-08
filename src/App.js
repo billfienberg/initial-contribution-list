@@ -32,7 +32,7 @@ class App extends React.Component {
     })
     const { repositoriesContributedTo } = result.data.user
     const { nodes } = repositoriesContributedTo
-    this.setState({ repos: nodes, loading: false })
+    this.setState({ repos: nodes, loading: false, username: "" })
   }
 
   render() {
@@ -42,7 +42,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Introduction />
-        <Form onSubmit={this._executeSearch} isDisabled={isDisabled} onChange={onChange} />
+        <Form onSubmit={this._executeSearch} isDisabled={isDisabled} onChange={onChange} username={username} />
         <h2>Repos</h2>
         {loading && <p>Loading...</p>}
         {!!repos.length && <RepoTable repos={repos} />}
