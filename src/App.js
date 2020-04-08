@@ -2,6 +2,67 @@ import React from "react"
 import gql from "graphql-tag"
 import { ApolloConsumer } from "react-apollo"
 
+function Introduction() {
+  return (
+    <>
+      <h1>Contribution List</h1>
+      <p>1. Type a GitHub username into the text input (for example, kentcdodds).</p>
+      <p>
+        2. Click the <b>Fetch Contributions</b> button.
+        </p>
+      <p>3. See a list of all the repos that user has contributed to.</p>
+    </>
+  )
+}
+
+function Form(props) {
+  const { isDisabled, onChange, onSubmit } = props
+  return (
+    <form onSubmit={onSubmit}>
+      <div>
+        <label>
+          Username:
+              <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
+        </label>
+      </div>
+      <div>
+        <button type="submit" disabled={isDisabled}>
+          Fetch Contributions
+            </button>
+      </div>
+    </form>
+  )
+}
+
+function RepoTable(props) {
+  const { repos = [] } = props
+  return (
+    <table data-testid="repo-table">
+      <thead>
+        <tr>
+          <th>Owner</th>
+          <th>Name</th>
+          <th>Stars</th>
+        </tr>
+      </thead>
+      <tbody>
+        {repos.map((x) => {
+          const { id, name, owner, stargazers } = x
+          const { login: repoOwner } = owner
+          const { totalCount: starCount } = stargazers
+          return (
+            <tr key={id}>
+              <td>{repoOwner}</td>
+              <td>{name}</td>
+              <td>{starCount}</td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
 // https://developer.github.com/v4/explorer/
 export const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
   query RepositoriesContributedTo($username: String!) {
@@ -35,7 +96,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   onChange = (event) => {
     this.setState({ username: event.target.value })
@@ -63,55 +124,11 @@ class App extends React.Component {
     const isDisabled = !username || loading
     return (
       <div className="App">
-        <h1>Contribution List</h1>
-        <p>1. Type a GitHub username into the text input (for example, kentcdodds).</p>
-        <p>
-          2. Click the <b>Fetch Contributions</b> button.
-        </p>
-        <p>3. See a list of all the repos that user has contributed to.</p>
-
-        <form onSubmit={this._executeSearch}>
-          <div>
-            <label>
-              Username:
-              <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
-            </label>
-          </div>
-          <div>
-            <button type="submit" disabled={isDisabled}>
-              Fetch Contributions
-            </button>
-          </div>
-        </form>
-
+        <Introduction />
+        <Form onSubmit={this._executeSearch} isDisabled={isDisabled} onChange={onChange} />
         <h2>Repos</h2>
         {loading && <p>Loading...</p>}
-
-        {!!repos.length && (
-          <table data-testid="repo-table">
-            <thead>
-              <tr>
-                <th>Owner</th>
-                <th>Name</th>
-                <th>Stars</th>
-              </tr>
-            </thead>
-            <tbody>
-              {repos.map((x) => {
-                const { id, name, owner, stargazers } = x
-                const { login: repoOwner } = owner
-                const { totalCount: starCount } = stargazers
-                return (
-                  <tr key={id}>
-                    <td>{repoOwner}</td>
-                    <td>{name}</td>
-                    <td>{starCount}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        )}
+        {!!repos.length && <RepoTable repos={repos} />}
       </div>
     )
   }
