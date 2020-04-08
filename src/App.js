@@ -4,6 +4,7 @@ import Introduction from "./Introduction"
 import Form from "./Form"
 import RepoTable from "./RepoTable"
 import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
+
 class App extends React.Component {
   constructor(props) {
     super(props)
