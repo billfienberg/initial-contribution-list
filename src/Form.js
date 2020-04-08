@@ -1,19 +1,20 @@
-import React from 'react'
+import React from "react"
+import Button from "react-bootstrap/Button"
 
 function Form(props) {
-  const { isDisabled, onChange, onSubmit } = props
+  const { isDisabled, onChange, onSubmit, username } = props
   return (
     <form onSubmit={onSubmit}>
       <div>
         <label>
           Username:
-              <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
+          <input type="text" name="username" placeholder="billfienberg" onChange={onChange} value={username} />
         </label>
       </div>
       <div>
-        <button type="submit" disabled={isDisabled}>
+        <Button type="submit" disabled={isDisabled} variant="primary">
           Fetch Contributions
-            </button>
+        </Button>
       </div>
     </form>
   )

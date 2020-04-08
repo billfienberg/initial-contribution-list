@@ -1,9 +1,10 @@
 import React from "react"
 import { ApolloConsumer } from "react-apollo"
-import Introduction from './Introduction'
-import Form from './Form'
-import RepoTable from './RepoTable'
-import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from './queries'
+import Introduction from "./Introduction"
+import Form from "./Form"
+import RepoTable from "./RepoTable"
+import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -31,7 +32,7 @@ class App extends React.Component {
     })
     const { repositoriesContributedTo } = result.data.user
     const { nodes } = repositoriesContributedTo
-    this.setState({ repos: nodes, loading: false })
+    this.setState({ repos: nodes, loading: false, username: "" })
   }
 
   render() {
@@ -41,7 +42,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Introduction />
-        <Form onSubmit={this._executeSearch} isDisabled={isDisabled} onChange={onChange} />
+        <Form onSubmit={this._executeSearch} isDisabled={isDisabled} onChange={onChange} username={username} />
         <h2>Repos</h2>
         {loading && <p>Loading...</p>}
         {!!repos.length && <RepoTable repos={repos} />}
