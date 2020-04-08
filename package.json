@@ -47,5 +47,9 @@
     "presets": [
       "kcd-scripts/babel"
     ]
+  },
+  "engines": {
+    "node": ">=12.14.1",
+    "npm": ">=6.13.4"
   }
 }
