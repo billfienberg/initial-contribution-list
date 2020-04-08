@@ -14,8 +14,6 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() { }
-
   onChange = (event) => {
     this.setState({ username: event.target.value })
   }
