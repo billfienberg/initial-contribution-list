@@ -1,5 +1,6 @@
 import React from "react"
 import gql from "graphql-tag"
+import { ApolloConsumer } from "react-apollo"
 
 // https://developer.github.com/v4/explorer/
 export const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
@@ -116,4 +117,7 @@ class App extends React.Component {
   }
 }
 
-export default App
+const WithApolloClient = () => <ApolloConsumer>{(client) => <App client={client} />}</ApolloConsumer>
+
+export default WithApolloClient
+export { App }
