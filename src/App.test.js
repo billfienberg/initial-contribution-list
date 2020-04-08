@@ -3,7 +3,8 @@ import { waitForElementToBeRemoved } from "@testing-library/dom"
 import { render, fireEvent } from "@testing-library/react"
 import { MockedProvider } from "@apollo/react-testing"
 import { ApolloConsumer } from "react-apollo"
-import App, { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./App"
+import App from "./App"
+import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
 
 const mocks = [
   {
