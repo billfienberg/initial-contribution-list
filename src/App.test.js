@@ -1,28 +1,67 @@
 import React from "react"
-import { render } from "@testing-library/react"
-import App from "./App"
+import domTestingLib, { waitForElementToBeRemoved, queryByTestId } from "@testing-library/dom"
+import { render, fireEvent } from "@testing-library/react"
+import { MockedProvider } from "@apollo/react-testing"
+import App, { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./App"
+import client from "./client"
 
-test("renders the Contributions List app", () => {
-  const { getByRole, getByLabelText, queryByText } = render(<App />)
+const mocks = [
+  {
+    request: {
+      query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
+      variables: { username: "billfienberg" },
+    },
+    result: {
+      data: {
+        user: {
+          repositoriesContributedTo: {
+            totalCount: 2,
+            nodes: [
+              {
+                id: "MDEwOlJlcG9zaXRvcnk5MzU2NTU4Mg==",
+                owner: { id: "MDEyOk9yZ2FuaXphdGlvbjI5MjM5NDQ3", login: "howtographql" },
+                name: "howtographql",
+                description: "The Fullstack Tutorial for GraphQL",
+                stargazers: { totalCount: 6528 },
+              },
+              {
+                id: "MDEwOlJlcG9zaXRvcnk5NDM2NzY3Nw==",
+                owner: { id: "MDQ6VXNlcjQwNjAxODc=", login: "jaredpalmer" },
+                name: "formik",
+                description: "Build forms in React, without the tears 😭 ",
+                stargazers: { totalCount: 21443 },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
+]
 
-  const usernameInput = getByLabelText(/username/i)
-  expect(usernameInput).toBeInTheDocument()
-  expect(usernameInput.value).toBe("")
+test("renders the Contributions List app", async () => {
+  const { getByRole, getByLabelText, queryByText, getByTestId, queryByTestId } = render(
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <App client={client} />
+    </MockedProvider>,
+  )
 
-  const fetchContributionsButton = getByRole(/button/i)
-  expect(fetchContributionsButton).toBeInTheDocument()
-  expect(fetchContributionsButton.disabled).toBe(true)
+  expect(getByLabelText(/username/i).value).toBe("")
 
-  const loadingMessage = queryByText(/loading/i)
-  expect(loadingMessage).not.toBeInTheDocument()
+  expect(getByRole(/button/i).disabled).toBe(true)
 
-  const repoTable = queryByText(/loading/i)
-  expect(repoTable).not.toBeInTheDocument()
+  expect(queryByText(/loading/i)).not.toBeInTheDocument()
 
-  // TODO: input a username
-  // TODO: assert that search button is no longer disabled
-  // TODO: click search button
-  // TODO: assert that loading is present
-  // TODO: assert that loading disappears
-  // TODO: assert that repos are rendered
+  expect(queryByTestId(/repo-table/i)).not.toBeInTheDocument()
+
+  fireEvent.change(getByLabelText(/username/i), { target: { value: "kentcdodds" } })
+
+  expect(getByRole(/button/i).disabled).toBe(false)
+
+  fireEvent.click(getByRole(/button/i))
+
+  await waitForElementToBeRemoved(() => queryByText(/loading/i))
+  expect(queryByText(/loading/i)).not.toBeInTheDocument()
+
+  expect(getByTestId(/repo-table/i)).toBeInTheDocument()
 })
