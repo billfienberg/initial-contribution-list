@@ -8,7 +8,7 @@ function Introduction() {
       <p>
         2. Click the <b>Fetch Contributions</b> button.
         </p>
-      <p>3. See a list of all the repos that user has contributed to.</p>
+      <p>3. See a list of repos that user has contributed to.</p>
     </>
   )
 }
