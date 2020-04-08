@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 function Form(props) {
   const { isDisabled, onChange, onSubmit } = props
@@ -7,13 +7,13 @@ function Form(props) {
       <div>
         <label>
           Username:
-              <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
+          <input type="text" name="username" placeholder="billfienberg" onChange={onChange} />
         </label>
       </div>
       <div>
         <button type="submit" disabled={isDisabled}>
           Fetch Contributions
-            </button>
+        </button>
       </div>
     </form>
   )

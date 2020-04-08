@@ -5,7 +5,7 @@ import { MockedProvider } from "@apollo/react-testing"
 import { ApolloConsumer } from "react-apollo"
 import App from "./App"
 import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
-import data from './mockData'
+import data from "./mockData"
 
 const mocks = [
   {
