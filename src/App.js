@@ -1,33 +1,9 @@
 import React from "react"
-import gql from "graphql-tag"
 import { ApolloConsumer } from "react-apollo"
 import Introduction from './Introduction'
 import Form from './Form'
 import RepoTable from './RepoTable'
-
-// https://developer.github.com/v4/explorer/
-export const REPOSITORIES_CONTRIBUTED_TO_QUERY = gql`
-  query RepositoriesContributedTo($username: String!) {
-    user(login: $username) {
-      repositoriesContributedTo(first: 50, privacy: PUBLIC) {
-        totalCount
-        nodes {
-          id
-          owner {
-            id
-            login
-          }
-          name
-          description
-          stargazers {
-            totalCount
-          }
-        }
-      }
-    }
-  }
-`
-
+import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from './queries'
 class App extends React.Component {
   constructor(props) {
     super(props)
