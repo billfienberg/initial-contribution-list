@@ -1,5 +1,5 @@
 import React from "react"
-import domTestingLib, { waitForElementToBeRemoved, queryByTestId } from "@testing-library/dom"
+import { waitForElementToBeRemoved } from "@testing-library/dom"
 import { render, fireEvent } from "@testing-library/react"
 import { MockedProvider } from "@apollo/react-testing"
 import App, { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./App"
