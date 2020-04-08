@@ -5,6 +5,7 @@ import { MockedProvider } from "@apollo/react-testing"
 import { ApolloConsumer } from "react-apollo"
 import App from "./App"
 import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
+import data from './mockData'
 
 const mocks = [
   {
@@ -12,31 +13,7 @@ const mocks = [
       query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
       variables: { username: "billfienberg" },
     },
-    result: {
-      data: {
-        user: {
-          repositoriesContributedTo: {
-            totalCount: 2,
-            nodes: [
-              {
-                id: "MDEwOlJlcG9zaXRvcnk5MzU2NTU4Mg==",
-                owner: { id: "MDEyOk9yZ2FuaXphdGlvbjI5MjM5NDQ3", login: "howtographql" },
-                name: "howtographql",
-                description: "The Fullstack Tutorial for GraphQL",
-                stargazers: { totalCount: 6528 },
-              },
-              {
-                id: "MDEwOlJlcG9zaXRvcnk5NDM2NzY3Nw==",
-                owner: { id: "MDQ6VXNlcjQwNjAxODc=", login: "jaredpalmer" },
-                name: "formik",
-                description: "Build forms in React, without the tears 😭 ",
-                stargazers: { totalCount: 21443 },
-              },
-            ],
-          },
-        },
-      },
-    },
+    result: data,
   },
 ]
 
