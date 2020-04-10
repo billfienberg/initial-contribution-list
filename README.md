@@ -14,6 +14,22 @@ Additionally, I try to make my code resemble documentation code as much as possi
 
 I hope this series of branches demonstrates my attempts to get an app working, add tests, and then incrementally improve the app without having to significantly change my tests.
 
+### The App
+
+I don't want to build a cliche app, like a todo list. And I'd prefer if my app actually solves a real problem and/or answers a real question(s) I've had for a while.
+
+#### Problem
+
+As a developer who has a handful of typos and grammatical errors in open source documentation, I want to see a list of all the repos that I've contributed to, along with how many stars all those repos have, so I can "measure" the reach of my impact.
+
+#### Solution
+
+I will build an app with the following features:
+
+- A text input where the user can type a GitHub username
+- A button that queries the GitHub GraphQL service for the [`repositoriescontributedto`](https://developer.github.com/v4/object/user/#repositoriescontributedto) for the specified user
+- A table of repos showing repo owner, name, and stargazers
+
 ### Agenda
 
 1. Configuration
