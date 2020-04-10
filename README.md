@@ -4,11 +4,11 @@
 
 I strongly agree with Kent Beck's recommendation of first making the change easy, and then making the easy change.
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">for each desired change, make the change easy (warning: this may be hard), then make the easy change</p>&mdash; Kent Beck (@KentBeck) <a href="https://twitter.com/KentBeck/status/250733358307500032?ref_src=twsrc%5Etfw">September 25, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">for each desired change, make the change easy (warning: this may be hard), then make the easy change</p>&mdash; Kent Beck (@KentBeck) <a href="https://twitter.com/KentBeck/status/250733358307500032?ref_src=twsrc%5Etfw">September 25, 2012</a></blockquote>
 
 I also strongly agree with Kent C. Dodd's thoughts about testing implementation details.
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Testing implementation details is a recipe for disaster.<br><br>Do yourself a favor and give react-testing-library a solid try. Your future self will thank your present self <a href="https://t.co/iMU4gcj8aP">https://t.co/iMU4gcj8aP</a> 🐐</p>&mdash; Kent C. Dodds 🧑‍🚀 (@kentcdodds) <a href="https://twitter.com/kentcdodds/status/1037855652985495552?ref_src=twsrc%5Etfw">September 7, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Testing implementation details is a recipe for disaster.<br><br>Do yourself a favor and give react-testing-library a solid try. Your future self will thank your present self <a href="https://t.co/iMU4gcj8aP">https://t.co/iMU4gcj8aP</a> 🐐</p>&mdash; Kent C. Dodds 🧑‍🚀 (@kentcdodds) <a href="https://twitter.com/kentcdodds/status/1037855652985495552?ref_src=twsrc%5Etfw">September 7, 2018</a></blockquote>
 
 Additionally, I try to make my code resemble documentation code as much as possible. However, documentation code is often updated and refactored much faster and more frequently than production code.
 
