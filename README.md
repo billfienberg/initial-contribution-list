@@ -1,4 +1,4 @@
-# Realistic Refactoring in React
+# Realistic React Refactoring
 
 ## Motivation
 
