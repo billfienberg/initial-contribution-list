@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Introduction from "./Introduction"
 import Form from "./Form"
 import RepoTable from "./RepoTable"
-import api from "./api"
+import { fetchReposContributedToByUser } from "./api"
 
 function App(props) {
   const [username, setUsername] = useState("")
@@ -15,7 +15,7 @@ function App(props) {
   async function executeSearch(event) {
     event.preventDefault()
     setIsLoading(true)
-    const response = await api(username)
+    const response = await fetchReposContributedToByUser(username)
     const result = await response.json()
     const { nodes } = result.data.user.repositoriesContributedTo
     setRepos(nodes)
