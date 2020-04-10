@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Introduction from "./Introduction"
 import Form from "./Form"
 import RepoTable from "./RepoTable"
-import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
+import api from "./api"
 
 function App(props) {
   const [username, setUsername] = useState("")
@@ -15,19 +15,8 @@ function App(props) {
   async function executeSearch(event) {
     event.preventDefault()
     setIsLoading(true)
-    const variables = { username }
-    const token = process.env.REACT_APP_ACCESS_TOKEN
-    const body = JSON.stringify({
-      query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
-      variables,
-    })
-    const response = await fetch("https://api.github.com/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: token ? `Bearer ${token}` : "" },
-      body,
-    })
+    const response = await api(username)
     const result = await response.json()
-
     const { nodes } = result.data.user.repositoriesContributedTo
     setRepos(nodes)
     setIsLoading(false)
