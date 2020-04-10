@@ -1,6 +1,6 @@
 import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
 
-function api(username) {
+export function fetchReposContributedToByUser(username) {
   const variables = { username }
   const token = process.env.REACT_APP_ACCESS_TOKEN
   const body = JSON.stringify({
@@ -16,5 +16,3 @@ function api(username) {
     body,
   })
 }
-
-export default api
