@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import Introduction from "./Introduction"
 import Form from "./Form"
 import RepoTable from "./RepoTable"
+import { REPOSITORIES_CONTRIBUTED_TO_QUERY } from "./queries"
 
 function App(props) {
   const [username, setUsername] = useState("")
@@ -17,27 +18,7 @@ function App(props) {
     const variables = { username }
     const token = process.env.REACT_APP_ACCESS_TOKEN
     const body = JSON.stringify({
-      query: `
-        query RepositoriesContributedTo($username: String!) {
-          user(login: $username) {
-            repositoriesContributedTo(first: 50, privacy: PUBLIC) {
-              totalCount
-              nodes {
-                id
-                owner {
-                  id
-                  login
-                }
-                name
-                description
-                stargazers {
-                  totalCount
-                }
-              }
-            }
-          }
-        }
-      `,
+      query: REPOSITORIES_CONTRIBUTED_TO_QUERY,
       variables,
     })
     const response = await fetch("https://api.github.com/graphql", {
